@@ -23,6 +23,7 @@ The _"non-endorsed"_ status means that the plugin is not endorsed by the origina
 | [**flutter_tts_tizen**](packages/flutter_tts) | [flutter_tts](https://github.com/dlutton/flutter_tts) (3rd-party) | [![pub package](https://img.shields.io/pub/v/flutter_tts_tizen.svg)](https://pub.dev/packages/flutter_tts_tizen) | No |
 | [**geolocator_tizen**](packages/geolocator) | [geolocator](https://github.com/Baseflow/flutter-geolocator/tree/master/geolocator) (3rd-party) | [![pub package](https://img.shields.io/pub/v/geolocator_tizen.svg)](https://pub.dev/packages/geolocator_tizen) | No |
 | [**google_maps_flutter_tizen**](packages/google_maps_flutter) | [google_maps_flutter](https://github.com/flutter/plugins/tree/master/packages/google_maps_flutter) (1st-party) | [![pub package](https://img.shields.io/pub/v/google_maps_flutter_tizen.svg)](https://pub.dev/packages/google_maps_flutter_tizen) | No |
+| [**google_sign_in_tizen**](packages/google_sign_in) | [google_sign_in](https://github.com/flutter/plugins/tree/master/packages/google_sign_in) (1st-party) | [![pub package](https://img.shields.io/pub/v/google_sign_in_tizen.svg)](https://pub.dev/packages/google_sign_in_tizen) | No |
 | [**image_picker_tizen**](packages/image_picker) | [image_picker](https://github.com/flutter/plugins/tree/master/packages/image_picker) (1st-party) | [![pub package](https://img.shields.io/pub/v/image_picker_tizen.svg)](https://pub.dev/packages/image_picker_tizen) | No |
 | [**integration_test_tizen**](packages/integration_test) | [integration_test](https://github.com/flutter/flutter/tree/master/packages/integration_test) (1st-party) | [![pub package](https://img.shields.io/pub/v/integration_test_tizen.svg)](https://pub.dev/packages/integration_test_tizen) | No |
 | [**messageport_tizen**](packages/messageport) | (Tizen-only) | [![pub package](https://img.shields.io/pub/v/messageport_tizen.svg)](https://pub.dev/packages/messageport_tizen) | N/A |
@@ -59,13 +60,14 @@ The _"non-endorsed"_ status means that the plugin is not endorsed by the origina
 | [**flutter_tts_tizen**](packages/flutter_tts) | ✔️ | ✔️ | ✔️ | ✔️ |
 | [**geolocator_tizen**](packages/geolocator) | ✔️ | ✔️ | ❌ | ❌ | Not applicable for TV |
 | [**google_maps_flutter_tizen**](packages/google_maps_flutter) | ❌ | ❌ | ✔️ | ❌ | Dependent library unavailable |
+| [**google_sign_in_tizen**](packages/google_sign_in) | ✔️ | ✔️ | ✔️ | ✔️ |
 | [**image_picker_tizen**](packages/image_picker) | ⚠️ | ❌ | ❌ | ❌ | No camera<br>No file manager app |
 | [**integration_test_tizen**](packages/integration_test) | ✔️ | ✔️ | ✔️ | ✔️ |
 | [**messageport_tizen**](packages/messageport) | ✔️ | ✔️ | ✔️ | ✔️ |
-| [**network_info_plus_tizen**](packages/network_info_plus) | ✔️ | ❌ | ✔️ | ❌ | API unsupported by emulators |
+| [**network_info_plus_tizen**](packages/network_info_plus) | ✔️ | ❌ | ✔️ | ❌ | API not supported on emulator |
 | [**package_info_plus_tizen**](packages/package_info_plus) | ✔️ | ✔️ | ✔️ | ✔️ |
-| [**path_provider_tizen**](packages/path_provider) | ⚠️ | ⚠️ | ⚠️ | ⚠️ | No external storage |
-| [**permission_handler_tizen**](packages/permission_handler) | ✔️ | ✔️ | ❌ | ❌ | Not applicable for TV |
+| [**path_provider_tizen**](packages/path_provider) | ✔️ | ✔️ | ✔️ | ✔️ |
+| [**permission_handler_tizen**](packages/permission_handler) | ✔️ | ✔️ | ⚠️ | ⚠️ | Not applicable for TV |
 | [**sensors_plus_tizen**](packages/sensors_plus) | ✔️ | ✔️ | ❌ | ❌ | No sensor hardware |
 | [**share_plus_tizen**](packages/share_plus) | ⚠️ | ⚠️ | ❌ | ❌ | No SMS or e-mail app |
 | [**shared_preferences_tizen**](packages/shared_preferences) | ✔️ | ✔️ | ✔️ | ✔️ |

@@ -1,3 +1,35 @@
+## 0.5.2
+* Add a back key handling.
+
+## 0.5.1
+* Apply PlatformView API change.
+* Code refactoring.
+
+## 0.5.0
+
+* Code refactoring.
+* Update the example app and integration_test.
+* Sync with the latest framework code.
+* Migrate to new analysis options.
+* Update LWE binary (f0ca15ee41d2fc96b59fd57b63b6c32cf6c1906b).
+
+## 0.4.4
+
+* Update LWE binary (645719ed084d899ec7d53de1758db71a8974e446).
+
+## 0.4.3
+
+* Remove unused things.
+* Fix build warnings.
+
+## 0.4.2
+
+* Support background color.
+
+## 0.4.1
+
+* Apply texture api change.
+
 ## 0.4.0
 
 * Support emulator.

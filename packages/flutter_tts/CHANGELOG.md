@@ -1,3 +1,14 @@
+## 1.3.0
+
+* Limit the range of `setSpeechRate` to be between 0.0 and 1.0.
+* Unsupport `getSpeechRateValidRange`.
+* Update flutter_tts to 3.5.0.
+* Update the example app.
+
+## 1.2.1
+
+* Refactor the C++ code.
+
 ## 1.2.0
 
 * Fix a bug where `setLanguage()` wasn't invoked due to typo in `setLanguage`.

@@ -1,5 +1,5 @@
-// Copyright 2013 The Flutter Authors. All rights reserved.
 // Copyright 2021 Samsung Electronics Co., Ltd. All rights reserved.
+// Copyright 2013 The Flutter Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -9,7 +9,7 @@ part of google_maps_flutter_tizen;
 class PolygonsController extends GeometryController {
   /// Initializes the cache. The [StreamController] comes from the [GoogleMapController], and is shared with other controllers.
   PolygonsController({
-    required StreamController<MapEvent> stream,
+    required StreamController<MapEvent<Object?>> stream,
   })  : _streamController = stream,
         _polygonIdToController = <PolygonId, PolygonController>{},
         _idToPolygonId = <int, PolygonId>{};
@@ -19,7 +19,7 @@ class PolygonsController extends GeometryController {
   final Map<int, PolygonId> _idToPolygonId;
 
   // The stream over which polygons broadcast events
-  final StreamController<MapEvent> _streamController;
+  final StreamController<MapEvent<Object?>> _streamController;
 
   /// Adds a set of [Polygon] objects to the cache.
   ///

@@ -5,43 +5,55 @@
 #ifndef FLUTTER_PLUGIN_TIZEN_APP_MANAGER_H_
 #define FLUTTER_PLUGIN_TIZEN_APP_MANAGER_H_
 
-#include <flutter/event_channel.h>
-#include <flutter/event_sink.h>
-#include <flutter/event_stream_handler_functions.h>
+#include <app_manager.h>
 
-#include "application_utils.h"
+#include <functional>
+#include <memory>
+#include <optional>
+#include <string>
+#include <vector>
 
-class TizenAppManagerPlugin : public flutter::Plugin {
+#include "tizen_app_info.h"
+
+using OnAppContextEvent =
+    std::function<void(std::string app_id, void* app_context_handle)>;
+
+class TizenAppManager {
  public:
-  using MethodResultPtr =
-      std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>>;
-  static void RegisterWithRegistrar(flutter::PluginRegistrar *registrar);
+  ~TizenAppManager();
 
-  TizenAppManagerPlugin();
+  // Returns a unique instance of TizenAppManager.
+  static TizenAppManager& GetInstance() {
+    static TizenAppManager instance;
+    return instance;
+  }
 
-  virtual ~TizenAppManagerPlugin();
+  std::unique_ptr<TizenAppInfo> GetAppInfo(const std::string& app_id);
 
-  flutter::EncodableList m_applications;
-  std::unique_ptr<flutter::EventSink<flutter::EncodableValue>> m_launch_events;
-  std::unique_ptr<flutter::EventSink<flutter::EncodableValue>>
-      m_terminate_events;
-  bool m_registered_event_cb;
-  int m_registered_cnt;
+  std::vector<std::unique_ptr<TizenAppInfo>> GetAllAppsInfo();
+
+  std::optional<std::string> GetSharedResourcePath(const std::string& app_id);
+
+  std::optional<bool> IsAppRunning(const std::string& app_id);
+
+  void SetAppLaunchHandler(OnAppContextEvent on_launch) {
+    launch_callback_ = on_launch;
+  }
+
+  void SetAppTerminateHandler(OnAppContextEvent on_terminate) {
+    terminate_callback_ = on_terminate;
+  }
+
+  int GetLastError() { return last_error_; }
+
+  std::string GetLastErrorString() { return get_error_message(last_error_); }
 
  private:
-  void HandleMethodCall(
-      const flutter::MethodCall<flutter::EncodableValue> &method_call,
-      MethodResultPtr result);
-  void RegisterObserver(
-      std::unique_ptr<flutter::EventSink<flutter::EncodableValue>> &&events);
-  void UnregisterObserver();
-  void GetCurrentId(MethodResultPtr result);
-  void GetApplicationInfo(const flutter::EncodableValue &arguments,
-                          MethodResultPtr result);
-  void GetInstalledApplicationsInfo(MethodResultPtr result);
-  void ApplicationIsRunning(const flutter::EncodableValue &arguments,
-                            MethodResultPtr result);
-  void SetupChannels(flutter::PluginRegistrar *registrar);
+  explicit TizenAppManager();
+
+  OnAppContextEvent launch_callback_;
+  OnAppContextEvent terminate_callback_;
+  int last_error_ = APP_MANAGER_ERROR_NONE;
 };
 
-#endif
+#endif  // FLUTTER_PLUGIN_TIZEN_APP_MANAGER_H_

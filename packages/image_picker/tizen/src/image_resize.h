@@ -1,3 +1,7 @@
+// Copyright 2021 Samsung Electronics Co., Ltd. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
 #ifndef FLUTTER_PLUGIN_IMAGE_RESIZE_H_
 #define FLUTTER_PLUGIN_IMAGE_RESIZE_H_
 
@@ -8,20 +12,28 @@
 class ImageResize {
  public:
   ImageResize() {}
-  bool Resize(const std::string& src_file, std::string& dst_file);
-  void SetSize(unsigned int w, unsigned int h, int q);
+  ~ImageResize() {}
+
+  void SetSize(uint32_t max_width, uint32_t max_height, int32_t quality) {
+    max_width_ = max_width;
+    max_height_ = max_height;
+    quality_ = quality;
+  }
+
+  bool Resize(const std::string& input_path, std::string* output_path);
 
  private:
-  bool DecodeImage(image_util_decode_h decode_h, image_util_image_h& src_image,
-                   const std::string& src_file);
-  bool TransformImage(transformation_h transform_h,
-                      image_util_image_h src_image,
-                      image_util_image_h& dst_image);
-  bool EncodeImage(image_util_encode_h encode_h, image_util_image_h dst_image,
-                   image_util_type_e encoder_type, const std::string& dst_file);
-  unsigned int max_width_ = 0;
-  unsigned int max_height_ = 0;
-  int quality_ = 0;
+  bool IsValidQuality() { return quality_ > 0 && quality_ < 100; }
+
+  bool DecodeImage(const std::string& path, image_util_image_h* image);
+
+  bool TransformImage(image_util_image_h input, image_util_image_h* output);
+
+  bool EncodeImage(image_util_image_h image, const std::string& path);
+
+  uint32_t max_width_ = 0;
+  uint32_t max_height_ = 0;
+  int32_t quality_ = 0;
 };
 
 #endif

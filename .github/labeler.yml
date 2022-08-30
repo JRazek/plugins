@@ -15,6 +15,8 @@
   - packages/geolocator/**/*
 'p: google_maps_flutter':
   - packages/google_maps_flutter/**/*
+'p: google_sign_in':
+  - packages/google_sign_in/**/*
 'p: image_picker':
   - packages/image_picker/**/*
 'p: integration_test':
@@ -31,10 +33,12 @@
   - packages/permission_handler/**/*
 'p: sensors_plus':
   - packages/sensors_plus/**/*
-'p: shared_preferences':
-  - packages/shared_preferences/**/*
 'p: share_plus':
   - packages/share_plus/**/*
+'p: shared_preferences':
+  - packages/shared_preferences/**/*
+'p: sqflite':
+  - packages/sqflite/**/*
 'p: tizen_app_control':
   - packages/tizen_app_control/**/*
 'p: tizen_app_manager':
@@ -43,6 +47,8 @@
   - packages/tizen_audio_manager/**/*
 'p: tizen_log':
   - packages/tizen_log/**/*
+'p: tizen_notification':
+  - packages/tizen_notification/**/*
 'p: tizen_package_manager':
   - packages/tizen_package_manager/**/*
 'p: url_launcher':
@@ -59,7 +65,3 @@
 # Tools
 'tools':
   - tools/**/*
-
-# Publishing
-'needs-publishing':
-  - packages/**/pubspec.yaml

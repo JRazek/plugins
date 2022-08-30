@@ -1,3 +1,16 @@
+## 2.4.0
+
+* Update video_player to 2.4.2.
+* Update video_player_platform_interface to 5.1.2.
+* Update the example app and integration_test.
+* Migrate to new analysis options.
+* Remove obsolete dependency on pedantic.
+* Code cleanups.
+
+## 2.3.2
+
+* Apply texture common release callback.
+
 ## 2.3.1
 
 * Show first frame after player is prepared.

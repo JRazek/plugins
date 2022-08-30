@@ -23,7 +23,7 @@ enum AppState {
   service,
 
   /// The service application is terminated.
-  terminated
+  terminated,
 }
 
 /// The application manager provides information about installed and running
@@ -164,9 +164,14 @@ class AppRunningContext {
   /// Creates an instance of [AppRunningContext] with application ID and handle address.
   AppRunningContext({required this.appId, int handleAddress = 0}) {
     _context = AppContext(appId, handleAddress);
+
+    _finalizer.attach(this, _context, detach: this);
   }
 
   late AppContext _context;
+
+  static final Finalizer<AppContext> _finalizer =
+      Finalizer<AppContext>((AppContext context) => context.destroy());
 
   /// The ID of the application.
   final String appId;
@@ -191,11 +196,11 @@ class AppRunningContext {
   }
 
   /// Releases all resources associated with this object.
-  ///
-  /// Note that [dispose] must be called on an instance of [AppRunningContext]
-  /// after use.
+  @Deprecated('Automatically disposed on GC')
   void dispose() {
     _context.destroy();
+
+    _finalizer.detach(this);
   }
 
   /// Sends a resume request to the application if it is not running.
@@ -208,14 +213,22 @@ class AppRunningContext {
     }
   }
 
-  /// Sends a terminate request to the application if it is running in foreground
-  /// or in a paused state.
+  /// Sends a terminate request to the application.
   ///
-  /// The `http://tizen.org/privilege/appmanager.kill` partner privilege is required
-  /// to use this API.
-  void terminate() {
+  /// Set [background] to true if the application is running in background or
+  /// is a service application.
+  ///
+  /// The `http://tizen.org/privilege/appmanager.kill.bgapp` privilege is
+  /// required if [background] is true. Otherwise, the
+  /// `http://tizen.org/privilege/appmanager.kill` platform privilege is
+  /// required.
+  void terminate({bool background = false}) {
     if (!isTerminated) {
-      _context.terminate();
+      if (background) {
+        _context.requestTerminateBgApp();
+      } else {
+        _context.terminate();
+      }
     }
   }
 }

@@ -19,6 +19,8 @@ typedef _AppContextGetPid = Int32 Function(
 typedef _AppContextGetAppState = Int32 Function(
     Pointer<_ContextHandle>, Pointer<Int32>);
 typedef _AppManagerTerminate = Int32 Function(Pointer<_ContextHandle>);
+typedef _AppManagerRequestTerminateBgApp = Int32 Function(
+    Pointer<_ContextHandle>);
 typedef _AppManagerResumeApp = Int32 Function(Pointer<_ContextHandle>);
 typedef _AppContextDestroy = Int32 Function(Pointer<_ContextHandle>);
 
@@ -33,7 +35,7 @@ final Pointer<Utf8> Function(int) getErrorMessage = _libBaseCommon
     .asFunction();
 
 _AppManager? _appManagerInstance;
-_AppManager get appManager => _appManagerInstance ??= _AppManager();
+_AppManager get _appManager => _appManagerInstance ??= _AppManager();
 
 class _AppManager {
   _AppManager() {
@@ -61,6 +63,10 @@ class _AppManager {
         .lookup<NativeFunction<_AppManagerTerminate>>(
             'app_manager_terminate_app')
         .asFunction();
+    requestTerminateBgApp = libAppMananger
+        .lookup<NativeFunction<_AppManagerRequestTerminateBgApp>>(
+            'app_manager_request_terminate_bg_app')
+        .asFunction();
     resumeApp = libAppMananger
         .lookup<NativeFunction<_AppManagerResumeApp>>('app_manager_resume_app')
         .asFunction();
@@ -77,6 +83,7 @@ class _AppManager {
   late int Function(Pointer<_ContextHandle>, Pointer<Int32>) getProcessId;
   late int Function(Pointer<_ContextHandle>, Pointer<Int32>) getAppState;
   late int Function(Pointer<_ContextHandle>) terminateApp;
+  late int Function(Pointer<_ContextHandle>) requestTerminateBgApp;
   late int Function(Pointer<_ContextHandle>) resumeApp;
   late int Function(Pointer<_ContextHandle>) destroyContext;
 }
@@ -91,7 +98,7 @@ class AppContext {
       final Pointer<Pointer<_ContextHandle>> pHandle = malloc();
       final Pointer<Utf8> pAppId = appId.toNativeUtf8();
       try {
-        final int ret = appManager.getAppContext(pAppId, pHandle);
+        final int ret = _appManager.getAppContext(pAppId, pHandle);
         if (ret != 0) {
           throw PlatformException(
             code: ret.toString(),
@@ -114,7 +121,7 @@ class AppContext {
 
   void destroy() {
     if (_handle != nullptr) {
-      final int ret = appManager.destroyContext(_handle);
+      final int ret = _appManager.destroyContext(_handle);
       _handle = nullptr;
       if (ret != 0) {
         throw PlatformException(
@@ -129,7 +136,7 @@ class AppContext {
     final Pointer<Int8> pOut = malloc();
     final Pointer<Utf8> pAppId = _appId.toNativeUtf8();
     try {
-      final int ret = appManager.appIsRunning(pAppId, pOut);
+      final int ret = _appManager.appIsRunning(pAppId, pOut);
       if (ret != 0) {
         throw PlatformException(
           code: ret.toString(),
@@ -148,7 +155,7 @@ class AppContext {
     final Pointer<Pointer<Utf8>> pPackageId = malloc();
     try {
       _checkHandle();
-      final int ret = appManager.getPackageId(_handle, pPackageId);
+      final int ret = _appManager.getPackageId(_handle, pPackageId);
       if (ret != 0) {
         throw PlatformException(
           code: ret.toString(),
@@ -166,7 +173,7 @@ class AppContext {
     final Pointer<Int32> pProcessId = malloc();
     try {
       _checkHandle();
-      final int ret = appManager.getProcessId(_handle, pProcessId);
+      final int ret = _appManager.getProcessId(_handle, pProcessId);
       if (ret != 0) {
         throw PlatformException(
           code: ret.toString(),
@@ -183,7 +190,7 @@ class AppContext {
     final Pointer<Int32> pState = malloc();
     try {
       _checkHandle();
-      final int ret = appManager.getAppState(_handle, pState);
+      final int ret = _appManager.getAppState(_handle, pState);
       if (ret != 0) {
         throw PlatformException(
           code: ret.toString(),
@@ -198,7 +205,18 @@ class AppContext {
 
   void terminate() {
     _checkHandle();
-    final int ret = appManager.terminateApp(_handle);
+    final int ret = _appManager.terminateApp(_handle);
+    if (ret != 0) {
+      throw PlatformException(
+        code: ret.toString(),
+        message: getErrorMessage(ret).toDartString(),
+      );
+    }
+  }
+
+  void requestTerminateBgApp() {
+    _checkHandle();
+    final int ret = _appManager.requestTerminateBgApp(_handle);
     if (ret != 0) {
       throw PlatformException(
         code: ret.toString(),
@@ -209,7 +227,7 @@ class AppContext {
 
   void resume() {
     _checkHandle();
-    final int ret = appManager.resumeApp(_handle);
+    final int ret = _appManager.resumeApp(_handle);
     if (ret != 0) {
       throw PlatformException(
         code: ret.toString(),

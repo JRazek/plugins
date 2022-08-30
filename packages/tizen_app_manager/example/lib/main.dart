@@ -2,13 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// ignore_for_file: public_member_api_docs
+
 import 'dart:async';
 
 import 'package:device_info_plus_tizen/device_info_plus_tizen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tizen_app_control/app_control.dart';
-import 'package:tizen_app_manager/app_manager.dart';
+import 'package:tizen_app_control/tizen_app_control.dart';
+import 'package:tizen_app_manager/tizen_app_manager.dart';
 
 /// The settings app ID.
 const String settingAppId = 'org.tizen.setting';
@@ -19,14 +21,12 @@ const String wearbleSettingAppId = 'org.tizen.watch-setting';
 /// The tv emulator volume setting app ID.
 const String tvVolumeSettingAppId = 'org.tizen.volume-setting';
 
-/// The main entry point for the UI app.
 void main() {
   runApp(const MyApp());
 }
 
-/// The main UI app widget.
+/// The main app widget.
 class MyApp extends StatelessWidget {
-  /// The constructor of the main UI app widget.
   const MyApp({Key? key}) : super(key: key);
 
   @override
@@ -95,7 +95,7 @@ class _MyHomePageState extends State<_MyHomePage> {
   }
 }
 
-/// The current application info page widget
+/// The current application info page widget.
 class _CurrentAppScreen extends StatefulWidget {
   const _CurrentAppScreen({Key? key}) : super(key: key);
 
@@ -124,16 +124,16 @@ class _CurrentAppScreenState extends State<_CurrentAppScreen> {
   @override
   void initState() {
     super.initState();
+
     _initApplicationsInfo();
   }
 
-  /// Platform messages are asynchronous, so we initialize in an async method.
   Future<void> _initApplicationsInfo() async {
     String appId;
     AppInfo? appInfo;
     AppRunningContext? currentAppContext;
 
-    /// Platform messages may fail, so we use a try/catch PlatformException.
+    // Platform messages may fail, so we use a try/catch.
     try {
       appId = await AppManager.currentAppId;
       appInfo = await AppManager.getAppInfo(appId);
@@ -173,18 +173,17 @@ class _CurrentAppScreenState extends State<_CurrentAppScreen> {
           _infoTile('Application type', _appInfo.appType),
           _infoTile('Execuatable path', _appInfo.executablePath),
           _infoTile('Shared res path', _appInfo.sharedResourcePath),
-          _infoTile('App meta data', _appInfo.metadata.toString()),
-          _infoTile(
-              'App is terminated', _currentAppContext.isTerminated.toString()),
-          _infoTile('process id', _currentAppContext.processId.toString()),
-          _infoTile('state', _currentAppContext.appState.toString()),
+          _infoTile('Metadata', _appInfo.metadata.toString()),
+          _infoTile('Terminated', _currentAppContext.isTerminated.toString()),
+          _infoTile('Process ID', _currentAppContext.processId.toString()),
+          _infoTile('State', _currentAppContext.appState.toString()),
         ],
       ),
     );
   }
 }
 
-/// The installed applications's information page widget.
+/// The installed applications' information page widget.
 class _AppsListScreen extends StatefulWidget {
   const _AppsListScreen({Key? key}) : super(key: key);
 
@@ -279,7 +278,6 @@ class _AppsEventScreenState extends State<_AppsEventScreen> {
           appId: event.appId,
           processId: event.processId,
         ));
-        event.dispose();
       });
     }));
     _subscriptions
@@ -290,7 +288,6 @@ class _AppsEventScreenState extends State<_AppsEventScreen> {
           appId: event.appId,
           processId: event.processId,
         ));
-        event.dispose();
       });
     }));
   }

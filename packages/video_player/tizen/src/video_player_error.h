@@ -1,5 +1,9 @@
-#ifndef VIDEO_PLAYER_ERROR_H_
-#define VIDEO_PLAYER_ERROR_H_
+// Copyright 2020 Samsung Electronics Co., Ltd. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef FLUTTER_PLUGIN_VIDEO_PLAYER_ERROR_H_
+#define FLUTTER_PLUGIN_VIDEO_PLAYER_ERROR_H_
 
 #include <string>
 
@@ -27,4 +31,4 @@ class VideoPlayerError {
   std::string message_;
 };
 
-#endif  // VIDEO_PLAYER_ERROR_H_
+#endif  // FLUTTER_PLUGIN_VIDEO_PLAYER_ERROR_H_

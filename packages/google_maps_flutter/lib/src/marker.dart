@@ -1,5 +1,5 @@
-// Copyright 2013 The Flutter Authors. All rights reserved.
 // Copyright 2021 Samsung Electronics Co., Ltd. All rights reserved.
+// Copyright 2013 The Flutter Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -41,8 +41,8 @@ class MarkerController {
   LatLngCallback? dragEndEvent;
 
   Future<void> _addMarkerEvent(Future<WebViewController>? _controller) async {
-    final String command =
-        '''$marker.addListener("click", (event) => MarkerClick.postMessage(JSON.stringify(${marker?.id})));
+    final String command = '''
+        $marker.addListener("click", (event) => MarkerClick.postMessage(JSON.stringify(${marker?.id})));
         $marker.addListener("dragend", (event) => MarkerDragEnd.postMessage(JSON.stringify({id:${marker?.id}, event:event})));''';
     await (await _controller!).runJavascript(command);
   }
